@@ -2,6 +2,7 @@ import React from 'react'
 import Note from '../Note/Note'
 import ApiContext from '../ApiContext'
 import './NotePageMain.css'
+import PropTypes from 'prop-types'
 
 export default class NotePageMain extends React.Component {
   static defaultProps = {
@@ -26,6 +27,7 @@ export default class NotePageMain extends React.Component {
           name={note.name}
           modified={note.modified}
           onDeleteNote={this.handleDeleteNote}
+          
         />
         <div className='NotePageMain__content'>
           {note.content.split(/\n \r|\n/).map((para, i) =>
@@ -35,4 +37,9 @@ export default class NotePageMain extends React.Component {
       </section>
     )
   }
+}
+
+NotePageMain.propTypes = {
+  match: PropTypes.object,
+  history: PropTypes.object
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import config from '../config';
 import ApiContext from '../ApiContext';
 import './AddFolder.css'
-
+import PropTypes from 'prop-types'
 
 
 export default class AddFolder extends Component {
@@ -18,6 +18,9 @@ export default class AddFolder extends Component {
         })
         .then(res => res.json())
         .then(data => this.context.addFolder(data))
+        .catch(error => {
+            console.error({error});
+        });
     }
 
     
@@ -69,3 +72,7 @@ export default class AddFolder extends Component {
           )
       }
 }
+
+AddFolder.propTypes = {
+    history: PropTypes.object
+  }

@@ -8,6 +8,9 @@ export default class AddNote extends React.Component{
     static contextType=ApiContext;
 
     addNewNote = note => {
+
+        note.modified = new Date(note.modified);
+
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: "POST",
             headers: {
@@ -19,27 +22,35 @@ export default class AddNote extends React.Component{
         return res.json()
     })
     .then(resJSON => this.context.handleAddNote(resJSON))
+    .catch(error => {
+        console.error({error});
+    });
 }
  handleFormSubmit = e => {
      e.preventDefault();
+     if(this.checkName()|| this.checkContent() ) {
+         return
+     }
      const newNote = {
          name: e.target.name.value,
          content: e.target.content.value,
-         folderId: e.target.folders.value
+         folderId: e.target.folders.value,
+         modified: new Date()
      }
      this.addNewNote(newNote);
      this.props.history.push('/');
+    
  }
 
  checkName = () => {
     console.log(this.context.newNote); 
-    if(this.context.newNote.name.value.length ===0)  {
+    if(this.context.newNote.name.value.trim().length ===0)  {
          return 'Please enter a name'
      }
  }
 
  checkContent = () => {
-    if (this.context.newNote.content.value.length ===0) {
+    if (this.context.newNote.content.value.trim().length ===0) {
         return ' Please add content for the note'
     }
  }
@@ -53,6 +64,7 @@ export default class AddNote extends React.Component{
       ))
  }
 
+ 
  
 
  render() {

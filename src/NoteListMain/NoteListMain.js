@@ -5,6 +5,7 @@ import Note from '../Note/Note'
 import CircleButton from '../CircleButton/CircleButton'
 import ApiContext from '../ApiContext'
 import './NoteListMain.css'
+import PropTypes from 'prop-types'
 
 export default class NoteListMain extends React.Component {
   static defaultProps = {
@@ -47,4 +48,8 @@ export default class NoteListMain extends React.Component {
       </section>
     )
   }
+}
+
+NoteListMain.propTypes = {
+  match: PropTypes.object
 }
